@@ -14,8 +14,6 @@ map.on("style.load", () => {
   map.setFog({}); // Set the default atmosphere style
 });
 
-// console.log(coordinates);
-
 const marker = new mapboxgl.Marker({ color: "red" })
   .setLngLat(listData.geometry.coordinates)
   .setPopup(

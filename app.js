@@ -2,7 +2,6 @@ if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
 console.log("DB URL:", process.env.ATLASDB_URL);
-// require("dotenv").config();
 const dbUrl = process.env.ATLASDB_URL || MONGO_URL;
 
 const express = require("express");
@@ -26,8 +25,6 @@ const userRouter = require("./routes/user.js");
 
 // mongoose DB connection
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-// const dbUrl =
-//   "mongodb+srv://PrinceMongoDB:wAXe8tIw454j2vqw@cluster0.u2zger6.mongodb.net/?appName=Cluster0";
 
 main()
   .then(() => {
@@ -47,13 +44,9 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.static(path.join(__dirname, "/public/js")));
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
-  // crypto: {
-  //   secret: process.env.SECRET,
-  // },
   touchAfter: 24 * 3600,
 });
 
@@ -72,11 +65,6 @@ const sessionOptions = {
     httpOnly: true,
   },
 };
-
-//Home Route
-// app.get("/", (req, res) => {
-//   res.send("Listening to root directory");
-// });
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -109,14 +97,6 @@ app.use((req, res, next) => {
 //   let { status = 500, message = "Something went wrong" } = err;
 //   res.status(status).render("error.ejs", { message });
 // });
-// app.use((err, req, res, next) => {
-//   if (res.headersSent) {
-//     return next(err);   // prevents double send
-//   }
-
-//   let { status = 500, message = "Something went wrong" } = err;
-//   res.status(status).render("error.ejs", { message });
-// });
 
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong" } = err;
@@ -127,7 +107,6 @@ app.use((err, req, res, next) => {
   }
 
   res.status(statusCode).render("error.ejs", { message });
-  // res.status(statusCode).send(message);
 });
 
 //server
